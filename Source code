@@ -1,0 +1,102 @@
+Source Code:
+
+#include <Servo.h>
+const int  buttonPin = 2;    // the pin that the pushbutton is attached to
+const int ledPin = 13;       // the pin that the LED is attached to
+const int trigPin = 9;       //trigger pin
+const int echoPin = 10;      //echo pin
+const int blueLed = 12;
+const int redLed = 11;
+const int redLed2 = 8;
+
+long duration;
+int distance;
+int buttonState = 0;         // current state of the button
+int myCounter=0;   
+
+Servo myservo; 
+int pos = 0;
+
+void setup() {
+  pinMode(buttonPin, INPUT);
+  pinMode(ledPin, OUTPUT);
+  pinMode(blueLed,OUTPUT);
+  pinMode(redLed,OUTPUT);
+  pinMode(redLed2,OUTPUT);
+   myservo.attach(7);
+  pinMode(trigPin, OUTPUT); // Sets the trigPin as an Output
+  pinMode(echoPin, INPUT); // Sets the echoPin as an Output
+  Serial.begin(9600);
+}
+
+void loop() {
+  // read the pushbutton input pin:
+  buttonState = digitalRead(buttonPin);
+  
+  if (buttonState == HIGH) {
+    digitalWrite(ledPin, HIGH); 
+   // Serial.println("HIGH");
+    
+    pattern();
+    delay(500);  
+  } else {
+    digitalWrite(ledPin, LOW);
+    Serial.println("LOW");
+    delay(500);
+  }
+  
+}
+void pattern(){
+  Serial.println("HIGH");
+
+//---------------------------------------------------------------------
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2); // Sets the trigPin on HIGH state for 10 micro seconds
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW); // Reads the echoPin, returns the sound wave travel time in microseconds
+  duration = pulseIn(echoPin, HIGH); 
+  distance= duration*0.034/2; // Calculating the distance
+//----------------------------------------------------------------------  
+    if(distance==12){ 
+      
+      //myservo.write(90);
+      digitalWrite(blueLed, HIGH);
+      
+      delay(1000);
+     // 
+      //----------------------------------------------------------------------
+      digitalWrite(trigPin, LOW);
+      delayMicroseconds(2);
+      digitalWrite(trigPin, HIGH);
+      delayMicroseconds(10);
+      digitalWrite(trigPin, LOW);
+      duration = pulseIn(echoPin, HIGH);
+      distance= duration*0.034/2;
+      //----------------------------------------------------------------------     
+      if (distance == 6){
+        
+        digitalWrite(redLed, HIGH);
+        delay(1000);
+        servo(); // calls the servo function to make the servo rotate
+        digitalWrite(redLed, LOW);
+        }
+       digitalWrite(blueLed, LOW);
+      }
+ 
+// Prints the distance on the Serial Monitor
+  Serial.print("Distance: ");
+  Serial.println(distance);
+  }
+
+  void servo(){
+    for (pos = 0; pos <= 180; pos += 1) { // goes from 0 degrees to 180 degrees
+    // in steps of 1 degree
+    myservo.write(pos);              // tell servo to go to position in variable 'pos'
+    delay(10);                       // waits 15ms for the servo to reach the position
+  }
+  for (pos = 180; pos >= 0; pos -= 1) { // goes from 180 degrees to 0 degrees
+    myservo.write(pos);              // tell servo to go to position in variable 'pos'
+    delay(10);                       // waits 15ms for the servo to reach the position
+    }  
+  }
