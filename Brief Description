@@ -1,4 +1,4 @@
-Description:
+>Description:
 *The System will work only when the button is kept pressed.
 *The pattern is set in the form of change in displacement of a set distance.
 *The rotation of the knob initiates a mechanical gear rotation, resulting in back-and-forth movement of a slit.
@@ -6,8 +6,27 @@ Description:
 *Predefined values of distance are set so that when the knob is rotated, the slit moves, the sonar sensor records a distance, if it matches the operator will have to turn the knob within 1 sec to rotate at an different angle.
 *For experimental purpose the blue LED lights up when first rotation angle matches, then within 1 sec if second rotation angle matches, the red LED lights up along with the servo being rotated. 
 
-Limitation:
+>Limitation:
 *The following knob Security system comes with a preset pattern which cannot be changed by the user.
 *A uninterrupted power supply (5V ) is required to power the system.
 *Door knobs have springs which lets it re track to its original position. Since we are not using any original door knob, 
  our prototype door knob does not return to its original position. So, we are marking an initial positions assuming the knob will remain at that position.
+
+>Working Description: 
+The idea is to build a smart door knob, which will only unlock upon rotating the knob by a specific pattern. 
+For Example, the pattern can be : 
+1. Rotating 90° clockwise, then, 90° anticlockwise
+2.  Wait for 1 second 
+3. Repeat step 1 twice.
+Initially, the pattern will be set, but with time we plan to upgrade the system so the user can change the pattern themselves.
+
+>Software Requirements: Arduino IDE
+
+>Hardware Requirements: 
+*Arduino Uno
+*Breadboard
+*Connecting Wires
+*LDR / Sonar Sensor (To measure the changes in an entity)
+*LED- 5mm
+*Resistors 
+*Prototype model of a door knob
